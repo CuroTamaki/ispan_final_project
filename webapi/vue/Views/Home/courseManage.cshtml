@@ -1,0 +1,289 @@
+﻿<!-- HOME start-->
+<section class="section-hero overlay inner-page bg-image " style="background-image: url('/images/hero_1.jpg');"
+         id="home-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <h1 class="text-white font-weight-bold">課程管理</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- home end -->
+
+
+<div id="appVue">
+    <section class="site-section block__18514 pt-4" id="next-section">
+        <div class="container h-100">
+            <div class="row">
+                <!-- Below is sidebar -->
+                <div class="col-xs-12 col-md-10 col-lg-4 mt-lg-5">
+                    <nav class="navbar navbar-expand-lg navbar-light pl-lg-5 py-0">
+                        <!-- <a class="navbar-brand" href="#">Liya rescue</a> -->
+                        <button class="navbar-toggler mb-2" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent" v-if="userstatus == true">
+                            <ul class="navbar-nav mr-auto flex-column">
+                                <li class="nav-item px-1 mx-1">
+                                    <div class="head"></div>
+                                    <div class="mb-3 border navbar-nav box">
+                                        <div class="p-3 w-100">
+                                            <figure class="figure ml-2">
+                                                <img src="https://picsum.photos/250/250/?random=10"
+                                                     class="figure-img img-fuild rounded-circle  w-50  ">
+                                                <h3 class="display-6 slide-h3 mt-1">{{userdata.name}}</h3>
+                                            </figure>
+                                            <div>手機:&nbsp; {{userdata.cellphone}}</div>
+                                            <div>信箱:&nbsp; {{userdata.email}}</div>
+                                            <div class="item text-end align-content-end mb-0">
+                                                <div class="text-right mr-3 fw-bold">
+                                                    <a asp-controller="Home" asp-action="memberDetail">
+                                                        修改會員資料 <i class="fa-solid fa-chevron-right"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="nav-item px-1 mx-1">
+                                    <div class="head mt-4 "></div>
+                                    <div class="border p-4 box mb-6">
+                                        <ul class="list-unstyled block__47528 ">
+                                            <li><span class="active h2 ">購買課程</span></li>
+                                            <li class="text-left">前往課程頁面學習更多</li>
+                                            <div class="w-100 text-center">
+                                                <button class="h-50 w-auto btn slide-button btn-lg">
+                                                    <a asp-controller="Home" asp-action="courseManage" class="">課程管理</a>
+                                                </button>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item px-1 mx-1" v-for="item in advertiseArray">
+                                    <div class="head mt-4"></div>
+                                    <a class="change" :href="'https://localhost:7158/Home/courseDetail?id=' + item.courseId">
+                                        <div class="border p-4 box mb-6 h-auto">
+                                            <ul class="list-unstyled block__47528 ">
+                                                <li><span class="active h2">{{item.courseName}}</span></li>
+                                                <figure class="w-100">
+                                                    <img src="https://picsum.photos/100/100/?random=10"
+                                                         class="float-left mr-3">
+                                                    <figcaption>
+                                                        {{item.courseIntro}}
+                                                    </figcaption>
+                                                </figure>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- </div> -->
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent" v-if="userstatus == false">
+                            <ul class="navbar-nav mr-auto flex-column">
+                                <li class="nav-item px-1 mx-1" v-for="item in advertiseArray">
+                                    <div class="head mt-4"></div>
+                                    <a class="change" :href="'https://localhost:7158/Home/courseDetail?id=' + item.courseId">
+                                        <div class="border p-4 box mb-6 h-auto">
+                                            <ul class="list-unstyled block__47528 ">
+                                                <li><span class="active h2">{{item.courseName}}</span></li>
+                                                <figure class="w-100">
+                                                    <img src="https://picsum.photos/100/100/?random=10" class="float-left mr-3">
+                                                    <figcaption>
+                                                        {{item.courseIntro}}
+                                                    </figcaption>
+                                                </figure>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <!-- Above is sidebar -->
+
+                <div class="col-lg-8 content mt-3 pt-lg-0 mt-lg-5 pb-2">
+                    <div class="context  w-100 p-3 mb-4">
+                        <div class="item row pt-4">
+                            <h3 class="display-5 fw-bolder mb-0 col-6 ml-3">購買課程</h3>
+                        </div>
+                        <ul class="list-unstyled block__47528 mb-0">
+                            <div v-for="item in buyList">
+                                <hr />
+                            <li class="ml-3 font-weight-bold active">
+                                {{item.courseName}}
+                            </li>
+@*                            <li class="ml-3 d-flex row mt-2 mb-2">
+                                {{item.teacherName}}
+                            </li>*@
+                            </div>
+                        </ul>
+                    </div>
+                <div class="context w-100 p-3 mb-4">
+                    <div class="item row pt-4">
+                        <h3 class="display-5 fw-bolder mb-0 col-6 ml-3">關注課程</h3>
+                    </div>
+                    <ul class="list-unstyled block__47528 mb-0">
+                        <div v-for="item in interestList">
+                            <hr />
+                            <a v-bind:href="'https://localhost:7158/Home/courseDetail?id='+ item.courseId" class="ml-3 font-weight-bold active text-URL">
+                                {{item.courseName}}
+                            </a>
+                            <div class="row">
+                                <div class="col align-items-center pt-2 d-flex">
+                                    <span class="col-6">共 {{ item.chapter }} 章</span>
+                                    <span class="col-6">NT$ {{item.price}} 元</span>
+                                </div>
+                                <div class="col pl-3 d-flex pb-1 justify-content-end">
+                                    <a v-bind:id="item.courseId" @@click="deleteInterestCourse" class="btn btn-dark mr-2">取消收藏</a>
+                                    <a v-bind:href="'https://localhost:7158/Home/payPage?id='+ item.courseId" class="btn btn-primary mr-5">立即購買</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+        </div>
+                <a href="#">
+                    <div class="more-cause" style="background-image: url('/images/sq_img_12.jpg');width: 95%;">
+                        <h5>前往更多課程 <i class="fa-solid fa-chevron-right"></i></h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+</div>
+</section>
+</div>
+
+
+@section Scripts{
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <script>
+        const webApi = "https://localhost:7240"
+        const appVue = new Vue({
+            el: "#appVue", // 綁定位置
+            name: "appVue",
+            data: {
+                buyList: [],
+                interestList: [],
+                advertiseArray:[],
+                userdata: [],
+                userstatus: false,
+
+            },
+            mounted: function () {
+                const _this = this;
+                _this.candidateBuy();
+                _this.candidateInterest();
+                _this.advertise();
+                _this.user();
+            },
+            methods: {
+                candidateBuy: function () {
+                    const _this = this;
+                    let candidateId = sessionStorage.getItem('Id')
+                    axios.get(`${webApi}/api/Orders?candidateId=${candidateId}&vaild=true`)
+                        .then(response => {
+                            _this.buyList = response.data;
+                        })
+                        .catch(err => console.log(err))
+                        .finally(console.log('完成'))
+                },
+                candidateInterest: function () {
+                    const _this = this;
+                    let candidateId = sessionStorage.getItem('Id')
+                    axios.get(`${webApi}/api/InterestedCourses?candidateId=${candidateId}`)
+                        .then(response => {
+                            _this.interestList = response.data;
+                        })
+                        .catch(err => console.log(err))
+                        .finally(console.log('完成'))
+                },
+                deleteInterestCourse :function (e) {
+                    let candidateId = sessionStorage.getItem('Id')
+                    let CourseId = e.target.id;
+                    swal({
+                        text: "你確定取消此收藏課程嗎?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: false,
+                    })
+                        .then(x => {
+                            if (x) {
+                                swal("此課程已取消收藏", {
+                                    icon: "success",
+                                });
+                                axios.delete(`${webApi}/api/InterestedCourses/${candidateId}/${CourseId}`)
+                                    .then(response => {
+                                        axios.get(`${webApi}/api/InterestedCourses?candidateId=${candidateId}`)
+                                            .then(response => {
+                                                this.interestList = response.data;
+                                            })
+                                    });
+                            } else {
+                                swal("你未執行此項動作");
+                            }
+                        });
+                    
+
+                    //var yes = confirm('你確定取消此收藏課程嗎?');
+                    //if(yes){
+                    //    axios.delete(`${webApi}/api/InterestedCourses/${candidateId}/${CourseId}`)
+                    //        .then(response => {
+                    //            alert("此課程已取消收藏");
+                    //            axios.get(`${webApi}/api/InterestedCourses?candidateId=${candidateId}`)
+                    //                .then(response => {
+                    //                    this.interestList = response.data;
+                    //                    console.log(this.interestList);
+                    //                })
+                    //        }).catch(err => console.log(err))
+                    //        .finally(console.log('完成'))
+                    //}
+                },
+                advertise: function () {
+                    let _this = this;
+                    let j;
+                    let arr = [];
+                    sessionStorage.getItem("Id") ? j = 1 : j = 2;
+                    axios.get(`${webApi}/api/Courses`)
+                        .then(res => {
+                            for (i = 0; i < j; i++) {
+                                let item = {}
+                                item = res.data[_this.random(res.data.length)]
+                                item.courseIntro = item.courseIntro.substr(0, 80) + "..."
+                                arr.push(item)
+                            }
+                            _this.advertiseArray = arr
+                            console.log(_this.advertiseArray)
+                        })
+                },
+                random(max) {
+                    return Math.floor(Math.random() * max);
+                },
+                user() {
+                    let userid = window.sessionStorage.getItem('Id')
+                    if (!userid) {
+                        this.userstatus = false
+                        return false;
+                    }
+                    this.userstatus = true
+                    let url = `${webApi}/api/Candidates/${userid}`;
+                    axios.get(url)
+                        .then(res => {
+                            let x = res.data[0].cellphone;
+                            res.data[0].cellphone = x.replace(x.slice(4, 7), '-xxx-')
+                            res.data[0].name = res.data[0].name + ' 你好'
+                            this.userdata = res.data[0]
+                            console.log(this.userdata)
+                        })
+                },
+            },
+        })
+    </script>
+}

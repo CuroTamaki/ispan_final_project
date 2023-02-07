@@ -1,0 +1,413 @@
+﻿<div id="appVue">
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url('/images/hero_1.jpg');"
+             id="home-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 class="text-white font-weight-bold">論壇討論區</h1>
+                    <div class="custom-breadcrumbs">
+                        <a href="#">Home</a> <span class="mx-2 slash">/</span>
+                        <span class="text-white"><strong>About Us</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="site-section block__18514 pt-4" id="next-section">
+        <div class="container h-100">
+            <div class="row">
+                <!-- Below is sidebar -->
+                <div class="col-xs-12 col-md-10 col-lg-4 mt-lg-5">
+                    <nav class="navbar navbar-expand-lg navbar-light pl-lg-5 py-0">
+                        <!-- <a class="navbar-brand" href="#">Liya rescue</a> -->
+                        <button class="navbar-toggler mb-2" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent" v-if="userstatus == true">
+                            <ul class="navbar-nav mr-auto flex-column">
+                                <li class="nav-item px-1 mx-1">
+                                    <div class="head"></div>
+                                    <div class="mb-3 border navbar-nav box">
+                                        <div class="p-3 w-100">
+                                            <figure class="figure ml-2">
+                                                <img src="https://picsum.photos/250/250/?random=10"
+                                                     class="figure-img img-fuild rounded-circle  w-50  ">
+                                                <h3 class="display-6 slide-h3 mt-1">{{userdata.name}}</h3>
+                                            </figure>
+                                            <div>手機:&nbsp; {{userdata.cellphone}}</div>
+                                            <div>信箱:&nbsp; {{userdata.email}}</div>
+                                            <div class="item text-end align-content-end mb-0">
+                                                <div class="text-right mr-3 fw-bold">
+                                                    <a asp-controller="Home" asp-action="memberDetail">
+                                                        修改會員資料 <i class="fa-solid fa-chevron-right"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="nav-item px-1 mx-1">
+                                    <div class="head mt-4 "></div>
+                                    <div class="border p-4 box mb-6">
+                                        <ul class="list-unstyled block__47528 ">
+                                            <li><span class="active h2 ">購買課程</span></li>
+                                            <li class="text-left">前往課程頁面學習更多</li>
+                                            <div class="w-100 text-center">
+                                                <button class="h-50 w-auto btn slide-button btn-lg">
+                                                    <a asp-controller="Home" asp-action="courseManage" class="">課程管理</a>
+                                                </button>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item px-1 mx-1" v-for="item in advertiseArray">
+                                    <div class="head mt-4"></div>
+                                    <a class="change" :href="'https://localhost:7158/Home/courseDetail?id=' + item.courseId">
+                                        <div class="border p-4 box mb-6 h-auto">
+                                            <ul class="list-unstyled block__47528 ">
+                                                <li><span class="active h2">{{item.courseName}}</span></li>
+                                                <figure class="w-100">
+                                                    <img src="https://picsum.photos/100/100/?random=10"
+                                                         class="float-left mr-3">
+                                                    <figcaption>
+                                                        {{item.courseIntro}}
+                                                    </figcaption>
+                                                </figure>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- </div> -->
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent" v-if="userstatus == false">
+                            <ul class="navbar-nav mr-auto flex-column">
+                                <li class="nav-item px-1 mx-1" v-for="item in advertiseArray">
+                                    <div class="head mt-4"></div>
+                                    <a class="change" :href="'https://localhost:7158/Home/courseDetail?id=' + item.courseId">
+                                        <div class="border p-4 box mb-6 h-auto">
+                                            <ul class="list-unstyled block__47528 ">
+                                                <li><span class="active h2">{{item.courseName}}</span></li>
+                                                <figure class="w-100">
+                                                    <img src="https://picsum.photos/100/100/?random=10" class="float-left mr-3">
+                                                    <figcaption>
+                                                        {{item.courseIntro}}
+                                                    </figcaption>
+                                                </figure>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <!-- Above is sidebar -->
+                <!-- Content start -->
+                <!-- Content start -->
+                <div class="col-lg-8 content mt-3 pt-lg-0 mt-lg-5 pb-2">
+                    <div class="context  w-100 p-3 mb-4">
+                        <div class="item row pt-4">
+                            <div class="col-12 justify-content-between">
+                                <li class="d-flex justify-content-between">
+                                    <div action="" class="fly-search">
+                                        <input class="layui-input" autocomplete="off" placeholder="搜索内容🔍" type="text" v-model="inputvalue" id="input" @@keydown.enter="search">
+                                        @*<button type="button" class="btn btn-primary" @@click="filterPlatformDTOes"><i class="fa-solid fa-magnifying-glass ml-4 mr-4"></i></button>*@
+
+                                    </div>
+                                    <a @@click="goPage" class="btn btn-primary">發文分享<i class="fa-solid fa-pen mx-2"></i></a>
+                                </li>
+                            </div>
+                            <div class="col-12 py-5" style="height:35px" v-for="data in PostDTOs">
+                                <ul class="fly-list">
+                                    <li id="posttitle" class="d-flex justify-content-between">
+                                        <div>
+                                            <a class="h4 fly-tip a1" v-bind:href="'https://localhost:7158/Home/platformArticle?id='+data.articleId">{{data.articleName}}</a>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                <span>
+                                                    <i class="un">{{data.updateTime}}</i>
+                                                </span>
+                                                <span class="fly-list-hint">
+                                                    <i class="un" title="回答">💬{{data.replyCount}}</i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    @*換頁條*@
+                    <div class="row pagination-wrap mt-5">
+                        <div class="col-md-12 text-center">
+                            <div class="custom-pagination ml-auto">
+                                <a href="#" class="prev" v-on:click="prev">Prev</a>
+                                <div class="d-inline-block" v-for="item in sliced">
+                                    <!--算頁數-->
+                                    <a href="#" class="active" v-if="currentpage == item" @@click="click(item)">{{item + 1}}</a>
+                                    <a href="#" v-else @@click="click(item)">{{item + 1}}</a>
+                                </div>
+                                <a href="#" class="next" v-on:click="next">Next</a>
+                            </div>
+                        </div>
+                    </div>
+                    @*------------------------------------*@
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- content end -->
+@section Scripts{
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script>
+        const webApi = "https://localhost:7240"
+        const appVue = new Vue({
+            el: "#appVue",
+            name: "appVue",
+            data: {
+                PostDTOs: [],
+                datas: [],
+                inputvalue: "",
+                updateTime: "",
+                //---
+                //datalist: [],
+                userdata: [],
+                userstatus: false,
+                pageData: [],
+                dataLength: 0,//資料長度
+                pagesize: 0, //頁數
+                sliced: [], //切分頁
+                currentpage: 0,
+                advertiseArray: []
+                //selectedArticleName: "",
+                //selectedKeyword: "",
+                //PlatformDTOes:[],
+                //Filter: "",
+            },
+            mounted: function () {
+                let _this = this;
+                _this.Platforms();
+                _this.user();
+                this.advertise();
+            },
+            methods: {
+                advertise() {
+                    let j;
+                    let arr = []
+                    sessionStorage.getItem("Id") ? j = 1 : j = 2;
+                    axios.get(`${webApi}/api/Courses`)
+                        .then(res => {
+                            for (i = 0; i < j; i++) {
+                                let item = {}
+                                item = res.data[this.random(res.data.length)]
+                                item.courseIntro = item.courseIntro.substr(0, 80) + "..."
+                                arr.push(item)
+                            }
+                            this.advertiseArray = arr
+                            console.log(this.advertiseArray)
+                        })
+                },
+                random(max) {
+                    return Math.floor(Math.random() * max);
+                },
+                Platforms: function () {
+                    let _this = this;
+                    let item = 0;
+                    axios.get(`${webApi}/api/Platforms`)
+                        .then(response => {
+                            //------------------------------------
+                            this.PostDTOs = [];
+                            _this.dataLength = response.data.length;
+                            console.log(response.data); //8筆
+                            _this.PageContent();
+                            let arr = [];
+
+                            for (let i = item * 15; i < (item + 1) * 15; i++) {
+                                let item = {};
+                                item = response.data[i];//6筆
+                                item.updateTime = moment(item.updateTime).add(8, "hour").format('YYYY/MM/DD h:mm a')
+                                arr.push(item);
+                            }
+                            _this.PostDTOs = arr;
+                            console.log(_this.PostDTOs)//6筆
+                            //------------------------------------
+                            //時間
+                            //_this.PostDTOs = response.data; //重複response了
+                            //var PostList = [];
+                            //for (var i = 0; i < _this.PostDTOs.length; i++) {
+                            //    let item = {};
+                            //    item = _this.PostDTOs[i];
+                            //    item.updateTime = moment(item.updateTime).add(8, "hour").format('YYYY/MM/DD h:mm a')
+                            //    PostList.push(item);
+                            //}
+                            //_this.PostDTOs = PostList;
+
+                        })
+                        .catch(err => console.log(err))
+                        .finally(console.log('完成'))
+                },
+                //------------------------------------
+                PageContent: function () { // 頁數長度
+                    this.sliced = [];
+                    this.pagesize = Math.ceil(this.dataLength / 15); //無條件進位
+                    for (let i = 0; i < this.pagesize; i++) {
+                        this.sliced[i] = i;
+                    }//[0,1]
+                },
+                click: function (item) {
+                    let currentpage = item;
+                    this.currentpage = currentpage;
+                    axios.get(`${webApi}/api/Platforms`)
+                        .then(response => {
+                            this.PostDTOs = [];
+                            this.dataLength = response.data.length;
+                            console.log(response.data); //8筆
+                            this.PageContent();
+                            let arr = [];
+                            let item = {};
+                            if (this.pagesize == (currentpage + 1)) {
+                                for (let i = currentpage * 15; i < response.data.length; i++) {
+                                    item = response.data[i];//6筆
+                                    item.updateTime = moment(item.updateTime).add(8, "hour").format('YYYY/MM/DD h:mm a')
+                                    arr.push(item);
+                                }
+                            } else {
+                                for (let i = currentpage * 15; i < (currentpage + 1) * 15; i++) {
+                                    item = response.data[i];//6筆
+                                    item.updateTime = moment(item.updateTime).add(8, "hour").format('YYYY/MM/DD h:mm a')
+                                    arr.push(item);
+                                }
+                            }
+                            this.PostDTOs = arr;
+                            console.log(this.PostDTOs)//6筆
+                        })
+                },
+                prev() {
+                    let currpage = this.currentpage
+                    if (currpage != 0) {
+                        currpage--;
+                        this.click(currpage)
+                        item.updateTime = moment(item.updateTime).add(8, "hour").format('YYYY/MM/DD h:mm a')
+                    }
+                },
+                next() {
+                    let currpage = this.currentpage;
+                    currpage++;
+                    if (currpage != this.sliced.length) {
+                        this.click(currpage)
+                        item.updateTime = moment(item.updateTime).add(8, "hour").format('YYYY/MM/DD h:mm a')
+                    }
+                },
+
+                //------------------------------------
+                //    search: function () {
+                //        //alert('你好繼宣');
+                //        let _this = this;
+                //        if (_this.inputvalue) {
+                //            let name = _this.inputvalue.replace(/[\ !@@#$%^&*()_+|}{":?>~+\-*\/.';[\]\\]+/g, "");
+                //            //let ArticleName = this.selectedArticleName;
+                //            axios.get(`${webApi}/api/Platforms?name=${name}`)
+                //                .then(response => {
+                //                    _this.PostDTOs = response.data;
+                //                    var searchList = [];
+                //                    for (var i = 0; i < _this.datas.lenght;i++){
+                //                         let item = {};
+                //                        item = _this.PostDTOs[i];
+                //                        searchList.push(item);
+                //                    }
+                //                    _this.PostDTOs = searchList;
+                //                    console.log(_this.datas)
+                //                })
+                //                .catch(err => console.log(err))
+                //                .finally(console.log('完成'))
+                //        } else {
+                //            _this.Platforms();
+                //            $('input').blur();
+                //        }
+                //    },
+                //},
+                //watch: {
+                //    inputvalue: {
+                //        handler(newval) {
+                //            this.Platforms();
+                //        },
+                //        deep: true
+                //    },
+                //}
+                search: function () {
+                    //alert('你好繼宣');
+                    let _this = this;
+                    var request = {};
+                    request.ArticleName = _this.inputvalue;
+                    this.currentpage = 0
+                    axios.post(`${webApi}/api/Platforms/Filter`, request).then(
+                        response => {
+                            _this.PostDTOs = response.data;
+                            _this.dataLength = response.data.length;
+                            _this.PageContent();
+                            var searchList = [];
+                            for (var i = 0; i < _this.PostDTOs.length; i++) {
+                                var item = {};
+                                item = _this.PostDTOs[i];
+                                item.updateTime = moment(item.updateTime).add(8, "hour").format('YYYY/MM/DD h:mm a')
+                                searchList.push(item);
+                            }
+                            _this.PostDTOs = searchList;
+
+                        }
+                    );
+
+                },
+                goPage: function () {
+                    let candidateId = sessionStorage.getItem('Id')
+                    if (candidateId != null) {
+                        location.href = 'https://localhost:7158/Home/platformPost'
+                    }
+                    else {
+                        location.href = 'https://localhost:7158/Home/memberLogin'
+                    }
+                },
+                user() {
+                    let userid = window.sessionStorage.getItem('Id')
+                    if (!userid) {
+                        this.userstatus = false
+                        return false;
+                    }
+                    this.userstatus = true
+                    let url = `${webApi}/api/Candidates/${userid}`;
+                    axios.get(url)
+                        .then(res => {
+                            let x = res.data[0].cellphone;
+                            res.data[0].cellphone = x.replace(x.slice(4, 7), '-xxx-')
+                            res.data[0].name = res.data[0].name + ' 你好'
+                            this.userdata = res.data[0]
+                            console.log(this.userdata)
+                        })
+                },
+            },
+            watch: {
+                inputvalue: {
+                    handler(newval) {
+                        if (!this.inputvalue) {
+                            this.Platforms();
+                        }
+                    },
+                    deep: true
+                },
+            }
+        })
+    </script>
+    }
